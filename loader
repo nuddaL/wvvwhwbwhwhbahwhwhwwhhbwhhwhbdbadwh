@@ -1,0 +1,158 @@
+if not isfile("loaded.txt") then
+    -- Gui to Lua
+    -- Version: 3.2
+    
+    -- Instances:
+    
+    local GUI = Instance.new("ScreenGui")
+    local MainFrame = Instance.new("Frame")
+    local SignUpImage = Instance.new("ImageLabel")
+    local coverText = Instance.new("Frame")
+    local keyInput = Instance.new("TextBox")
+    local Button = Instance.new("TextButton")
+    local ImageButton = Instance.new("ImageButton")
+    
+    --Properties:
+    
+    GUI.Name = "GUI"
+    GUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    
+    MainFrame.Name = "MainFrame"
+    MainFrame.Parent = GUI
+    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    MainFrame.Position = UDim2.new(0.244490355, 0, 0.262352943, 0)
+    MainFrame.Size = UDim2.new(0, 780, 0, 411)
+    MainFrame.Selectable = true
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+    
+    SignUpImage.Name = "Sign Up Image"
+    SignUpImage.Parent = MainFrame
+    SignUpImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    SignUpImage.BackgroundTransparency = 1.000
+    SignUpImage.Position = UDim2.new(-0.000354294549, 0, -0.00148055516, 0)
+    SignUpImage.Size = UDim2.new(0, 780, 0, 415)
+    SignUpImage.Image = "http://www.roblox.com/asset/?id=12150167398"
+    
+    coverText.Name = "coverText"
+    coverText.Parent = SignUpImage
+    coverText.BackgroundColor3 = Color3.fromRGB(235, 235, 235)
+    coverText.BorderSizePixel = 0
+    coverText.Position = UDim2.new(0.29743591, 0, 0.585542142, 0)
+    coverText.Size = UDim2.new(0, 88, 0, 34)
+    coverText.Visible = false
+    
+    keyInput.Name = "keyInput"
+    keyInput.Parent = SignUpImage
+    keyInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    keyInput.BackgroundTransparency = 1.000
+    keyInput.LayoutOrder = 1
+    keyInput.Position = UDim2.new(0.293531597, 0, 0.593479514, 0)
+    keyInput.Size = UDim2.new(0, 335, 0, 30)
+    keyInput.Font = Enum.Font.Unknown
+    keyInput.PlaceholderColor3 = Color3.fromRGB(239, 239, 239)
+    keyInput.Text = ""
+    keyInput.TextColor3 = Color3.fromRGB(190, 190, 190)
+    keyInput.TextSize = 23.000
+    keyInput.TextXAlignment = Enum.TextXAlignment.Left
+    
+    Button.Name = "Button"
+    Button.Parent = SignUpImage
+    Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Button.BackgroundTransparency = 1.000
+    Button.Position = UDim2.new(0.285897434, 0, 0.710843384, 0)
+    Button.Size = UDim2.new(0, 345, 0, 41)
+    Button.Font = Enum.Font.SourceSans
+    Button.Text = ""
+    Button.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Button.TextSize = 14.000
+    
+    ImageButton.Parent = SignUpImage
+    ImageButton.Active = false
+    ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ImageButton.BackgroundTransparency = 1.000
+    ImageButton.Position = UDim2.new(0.338461518, 0, 0.226505995, 0)
+    ImageButton.Size = UDim2.new(0, 251, 0, 223)
+    ImageButton.Visible = false
+    ImageButton.Image = "http://www.roblox.com/asset/?id=12150165069"
+    
+    -- Scripts:
+    
+    local function GBSNYBS_fake_script() -- keyInput.checkIfText 
+    	local script = Instance.new('LocalScript', keyInput)
+    
+    	spawn(function()
+    		while (wait(0.03)) do
+    			if game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].keyInput.Text ~= "" then
+    				game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].coverText.Visible = true
+    			else
+    				game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].coverText.Visible = false
+    			end
+    		end
+    	end)
+    end
+    coroutine.wrap(GBSNYBS_fake_script)()
+    
+    local function onbutton()
+    		if game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].keyInput.Text ~= nil then
+    			
+    			-- First time execution functions, ty and all of that stuff.		
+    			
+    			print("Thank you for using A Loaded Exploit!")
+    			if getexecutorname and type(getexecutorname) == "function" then
+    				executorName = getexecutorname() -- string response, use eq statement
+    			end
+    	
+    			if syn then
+    				print("Found Synapse X support, continuing with synapse script.")
+                    local aaa = 0
+                    spawn(function()
+                        while wait(0.033333333331) do
+                            aaa = aaa + 0.03333333333
+                            if donee then
+                                break    
+                            end
+                        end
+                    end)
+    				loadstring(game:HttpGet('https://raw.githubusercontent.com/nuddaL/wvvwhwbwhwhbahwhwhwwhhbwhhwhbdbadwh/main/syn'))()
+    				local donee = true
+    				print("Loaded in " .. aaa .. " seconds.")
+    				writefile("loaded.txt", "syn")
+    			elseif executorName == "ScriptWare" then
+    				print("Found ScriptWare support, continuing with ScriptWare script.")
+                    local aaa = 0
+                    spawn(function()
+                        while wait(0.033333333331) do
+                            aaa = aaa + 0.03333333333
+                            if donee then
+                                break    
+                            end
+                        end
+                    end)
+    				loadstring(game:HttpGet('https://raw.githubusercontent.com/nuddaL/wvvwhwbwhwhbahwhwhwwhhbwhhwhbdbadwh/main/sw'))()
+    				local donee = true
+    				print("Loaded in " .. aaa .. " seconds.")
+    				writefile("loaded.txt", "sw")
+    			else
+    				print("Please buy Synapse X or ScriptWare!!")
+    			end
+    			
+    			--UI functions
+    			
+    			game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].Visible = false
+    			game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].ImageButton.Visible = true
+    			game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].keyInput.TextTransparency = 1
+    			game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].keyInput.Active = false
+    			
+    			game.Players.LocalPlayer.PlayerGui.GUI:Destroy()
+    		end
+    end
+    
+    game.Players.LocalPlayer.PlayerGui.GUI.MainFrame["Sign Up Image"].Button.Activated:Connect(onbutton)
+else
+    if readfile("loaded.txt") == "syn" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/nuddaL/wvvwhwbwhwhbahwhwhwwhhbwhhwhbdbadwh/main/syn'))()
+    elseif readfile("loaded.txt") == "sw" then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/nuddaL/wvvwhwbwhwhbahwhwhwwhhbwhhwhbdbadwh/main/sw'))()
+    end
+end
