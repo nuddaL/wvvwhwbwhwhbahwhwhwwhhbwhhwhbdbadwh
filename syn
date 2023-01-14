@@ -34,7 +34,7 @@ local main = library:Load{
     SizeY = 700,
     Theme = "Midnight",
     Extension = "json", -- config file extension
-    Folder = "a loaded exploit" -- config folder name
+    Folder = "aloaded configs" -- config folder name
 }
 
 
@@ -405,7 +405,20 @@ local dropdown = nessential:Dropdown{
     },
     Flag = "mainexecutor",
     Callback = function(option)
-        writefile("loaded.txt", tostring(option))
+        writefile("aloaded/loaded.txt", tostring(option))
+    end
+}
+
+local toggle = nessential:Toggle{
+    Name = "skip sign-up",
+    Flag = "ssignup",
+    --Default = true,
+    Callback  = function(bool)
+        if (bool and "true" or "false") == true then
+            writefile("aloaded/skip.txt", "true")
+        else
+            writefile("aloaded/skip.txt", "false")
+        end
     end
 }
 
