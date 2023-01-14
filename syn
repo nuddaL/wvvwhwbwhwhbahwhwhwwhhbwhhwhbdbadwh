@@ -19,7 +19,7 @@ local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/vozoi
 local watermark = library:Watermark("a loaded exploit | " .. frames .. " fps | v0.1 | dev")
 
 spawn(function()
-    while wait(0.2) do
+    while wait(1) do
         local Start = tick()
         RemoteFunction:InvokeServer()
         local Latency = tick() - Start
@@ -30,8 +30,8 @@ end)
 
 local main = library:Load{
     Name = "a loaded exploit",
-    SizeX = 600,
-    SizeY = 650,
+    SizeX = 650,
+    SizeY = 700,
     Theme = "Midnight",
     Extension = "json", -- config file extension
     Folder = "a loaded exploit" -- config folder name
@@ -186,16 +186,23 @@ local section = tab:Section{
     Side = "Right"
 }
 
+local name = game.Players.LocalPlayer.Name
+
 function getUser()
-    if game.Players.LocalPlayer.Name == "daimonds007" then return "real" end
+    if name == "daimonds007" then return "real" elseif name == "HungryMuttis" then return "HungryMuttis" elseif name == "dr_draylbox" then return "Punktike" else return nil end
 end
 
 function getKey()
-    if getUser() == "real" then return "ooga" end
+    if getUser() == "real" then return "B2ZUVhHegmJRktDF" elseif getUser() == "HungryMuttis" then return "yaVE8N3bepQJSCP6" elseif getUser() == "Punktike" then return "dmf3cVUPtDChEQaG" elseif getUser() == nil then return "xxx" end
+end
+
+function getWLType()
+    if getUser() ~= nil then return "Premium" else return "Free" end    
 end
 
 local label = section:Label("User: " .. getUser())
 local label = section:Label("Key: " .. getKey())
+local label = section:Label("Whitelist status: " .. getWLType())
 
 
 
@@ -385,7 +392,22 @@ themepickers["Dropdown Option Background"] = customtheme:ColorPicker{
 
 library:ConfigIgnore("Dropdown Option Background")
 
+local nessential = tab:Section{Name = "loading settings", Side = "Left"}
 
+local dropdown = nessential:Dropdown{
+    Name = "Main executor",
+    --Default = "Option 1",
+    Scrollable = true,
+    ScrollingMax = 5,
+    Content = {
+        "syn",
+        "sw"
+    },
+    Flag = "mainexecutor",
+    Callback = function(option)
+        print("Scrolling Dropdown 1 is now " .. tostring(option))
+    end
+}
 
 local nessential = tab:Section{Name = "non essential visuals", Side = "Left"}
 
