@@ -405,7 +405,7 @@ local dropdown = nessential:Dropdown{
     },
     Flag = "mainexecutor",
     Callback = function(option)
-        print("Scrolling Dropdown 1 is now " .. tostring(option))
+        writefile("loaded.txt", tostring(option))
     end
 }
 
