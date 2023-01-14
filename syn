@@ -1,1 +1,461 @@
-print("synapse")
+print("This is just beta so do not be mad if it doesnt work as expected!")
+
+--[[
+
+local wh = 'https://discord.com/api/webhooks/1063860564322951260/vnGswV4JaUHQxyb38llPWvyUCOyiJkrAXhhIeEPbYly7tsHF7f1aJP8-0SJqF1W020Sq'
+
+
+local embed1 = {
+       ['title'] = 'Beginning of Message logs on '..game.PlaceId.." at "..tostring(os.date("%m/%d/%y"))
+   }
+local a = syn.request({
+   Url = wh,
+   Headers = {['Content-Type'] = 'application/json'},
+   Body = game:GetService("HttpService"):JSONEncode({['embeds'] = {embed1}, ['content'] = ''}),
+   Method = "POST"
+})
+function logMsg(Webhook, Player, Message)
+   local embed = {
+       ['description'] = Player..": "..Message
+   }
+   local a = syn.request({
+       Url = Webhook,
+       Headers = {['Content-Type'] = 'application/json'},
+       Body = game:GetService("HttpService"):JSONEncode({['embeds'] = {embed}, ['content'] = ''}),
+       Method = "POST"
+   })
+end
+for i,v in pairs(game.Players:GetPlayers()) do
+   v.Chatted:Connect(function(msg)
+       logMsg(wh, v.Name, msg)
+   end)
+end
+
+game.Players.PlayerAdded:Connect(function(plr)
+   plr.Chatted:Connect(function(msg)
+       logMsg(wh, plr.Name, msg)
+   end)
+end)
+
+--]]
+
+
+
+
+
+
+
+
+
+
+
+
+local startFOV = game.Workspace.CurrentCamera.FieldOfView
+
+
+local RS = game:GetService("RunService")
+local frames = 0
+
+RS.RenderStepped:Connect(function()
+	frames = frames + 1
+end)
+
+local RemoteFunction = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.MutePlayerRequest -- Cannot created from client it has to be SOME remote function.
+
+local Start = tick()
+RemoteFunction:InvokeServer()
+local Latency = tick() - Start
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/vozoid/ui-libraries/main/drawing/void/source.lua"))()
+
+local watermark = library:Watermark("a loaded exploit | " .. frames .. " fps | v0.1 | dev")
+
+spawn(function()
+    while wait(0.2) do
+        local Start = tick()
+        RemoteFunction:InvokeServer()
+        local Latency = tick() - Start
+        watermark:Set("a loaded exploit | " .. frames .. " fps | " .. math.floor(Latency * 1000) .. " ping | v0.1 | syn | dev")
+        frames = 0
+    end
+end)
+
+local main = library:Load{
+    Name = "a loaded exploit",
+    SizeX = 600,
+    SizeY = 650,
+    Theme = "Midnight",
+    Extension = "json", -- config file extension
+    Folder = "a loaded exploit" -- config folder name
+}
+
+
+local tab = main:Tab("visuals")
+
+getgenv().lineEnabled = false
+getgenv().boxEnabled = false
+
+local section = tab:Section{
+    Name = "boxes",
+    Side = "Left"
+}
+
+local toggle = section:Toggle{
+    Name = "Enabled",
+    Flag = "boxesesp",
+    Default = false,
+    Callback  = function(bool)
+        --[[
+        if (bool and "enabled" or "disabled") == "enabled" then
+            getgenv().boxEnabled = true
+        else
+            getgenv().boxEnabled = false
+        end
+        print(boxEnabled)
+        --]]
+        print("Disabled due to not working at all")
+    end
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local tab = main:Tab("settings")
+
+local keybindsection = tab:Section{Name = "keybinds", Side = "Left"}
+
+keybindsection:Keybind{
+    Name = "ui Ttoggle",
+    Flag = "UI Toggle",
+    Default = Enum.KeyCode.RightShift,
+    Blacklist = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2, Enum.UserInputType.MouseButton3},
+    Callback = function(_, fromsetting)
+        if not fromsetting then
+            library:Close()
+        end
+    end
+}
+
+keybindsection:Keybind{
+    Name = "panic keybind",
+    Flag = "PanicKeybind",
+    Default = Enum.KeyCode.P,
+    Blacklist = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2, Enum.UserInputType.MouseButton3},
+    Callback = function(_, fromsetting)
+        if not fromsetting then
+            library:Unload()
+            game.Workspace.CurrentCamera.FieldOfView = startFOV
+        end
+    end
+}
+
+local configsection = tab:Section{Name = "Configs", Side = "Left"}
+
+local configlist = configsection:Dropdown{
+    Name = "Configs",
+    Content = library:GetConfigs(), -- GetConfigs(true) if you want universal configs
+    Flag = "Config Dropdown"
+}
+
+library:ConfigIgnore("Config Dropdown")
+
+local loadconfig = configsection:Button{
+    Name = "Load Config",
+    Callback = function()
+        library:LoadConfig(library.flags["Config Dropdown"]) -- LoadConfig(library.flags["Config Dropdown"], true)  if you want universal configs
+    end
+}
+
+local delconfig = configsection:Button{
+    Name = "Delete Config",
+    Callback = function()
+        library:DeleteConfig(library.flags["Config Dropdown"]) -- DeleteConfig(library.flags["Config Dropdown"], true)  if you want universal configs
+        configlist:Refresh(library:GetConfigs())
+    end
+}
+
+
+local configbox = configsection:Box{
+    Name = "Config Name",
+    Placeholder = "Config Name",
+    Flag = "Config Name"
+}
+
+library:ConfigIgnore("Config Name")
+
+local save = configsection:Button{
+    Name = "Save Config",
+    Callback = function()
+        library:SaveConfig(library.flags["Config Dropdown"] or library.flags["Config Name"]) -- SaveConfig(library.flags["Config Name"], true) if you want universal configs
+        configlist:Refresh(library:GetConfigs())
+    end
+}
+
+local section = tab:Section{
+    Name = "whitelist info",
+    Side = "Right"
+}
+
+function getUser()
+    if game.Players.LocalPlayer.Name == "daimonds007" then return "real" end
+end
+
+function getKey()
+    if getUser() == "real" then return "ooga" end
+end
+
+local label = section:Label("User: " .. getUser())
+local label = section:Label("Key: " .. getKey())
+
+
+
+local themes = tab:Section{Name = "Theme", Side = "Left"}
+
+local themepickers = {}
+
+local themelist = themes:Dropdown{
+    Name = "Theme",
+    Default = library.currenttheme,
+    Content = library:GetThemes(),
+    Flag = "Theme Dropdown",
+    Callback = function(option)
+        if option then
+            library:SetTheme(option)
+
+            for option, picker in next, themepickers do
+                picker:Set(library.theme[option])
+            end
+        end
+    end
+}
+
+library:ConfigIgnore("Theme Dropdown")
+
+local namebox = themes:Box{
+    Name = "Custom Theme Name",
+    Placeholder = "Custom Theme",
+    Flag = "Custom Theme"
+}
+
+library:ConfigIgnore("Custom Theme")
+
+themes:Button{
+    Name = "Save Custom Theme",
+    Callback = function()
+        if library:SaveCustomTheme(library.flags["Custom Theme"]) then
+            themelist:Refresh(library:GetThemes())
+            themelist:Set(library.flags["Custom Theme"])
+            namebox:Set("")
+        end
+    end
+}
+
+local customtheme = tab:Section{Name = "Custom Theme", Side = "Right"}
+
+themepickers["Accent"] = customtheme:ColorPicker{
+    Name = "Accent",
+    Default = library.theme["Accent"],
+    Flag = "Accent",
+    Callback = function(color)
+        library:ChangeThemeOption("Accent", color)
+    end
+}
+
+library:ConfigIgnore("Accent")
+
+themepickers["Window Background"] = customtheme:ColorPicker{
+    Name = "Window Background",
+    Default = library.theme["Window Background"],
+    Flag = "Window Background",
+    Callback = function(color)
+        library:ChangeThemeOption("Window Background", color)
+    end
+}
+
+library:ConfigIgnore("Window Background")
+
+themepickers["Window Border"] = customtheme:ColorPicker{
+    Name = "Window Border",
+    Default = library.theme["Window Border"],
+    Flag = "Window Border",
+    Callback = function(color)
+        library:ChangeThemeOption("Window Border", color)
+    end
+}
+
+library:ConfigIgnore("Window Border")
+
+themepickers["Tab Background"] = customtheme:ColorPicker{
+    Name = "Tab Background",
+    Default = library.theme["Tab Background"],
+    Flag = "Tab Background",
+    Callback = function(color)
+        library:ChangeThemeOption("Tab Background", color)
+    end
+}
+
+library:ConfigIgnore("Tab Background")
+
+themepickers["Tab Border"] = customtheme:ColorPicker{
+    Name = "Tab Border",
+    Default = library.theme["Tab Border"],
+    Flag = "Tab Border",
+    Callback = function(color)
+        library:ChangeThemeOption("Tab Border", color)
+    end
+}
+
+library:ConfigIgnore("Tab Border")
+
+themepickers["Tab Toggle Background"] = customtheme:ColorPicker{
+    Name = "Tab Toggle Background",
+    Default = library.theme["Tab Toggle Background"],
+    Flag = "Tab Toggle Background",
+    Callback = function(color)
+        library:ChangeThemeOption("Tab Toggle Background", color)
+    end
+}
+
+library:ConfigIgnore("Tab Toggle Background")
+
+themepickers["Section Background"] = customtheme:ColorPicker{
+    Name = "Section Background",
+    Default = library.theme["Section Background"],
+    Flag = "Section Background",
+    Callback = function(color)
+        library:ChangeThemeOption("Section Background", color)
+    end
+}
+
+library:ConfigIgnore("Section Background")
+
+themepickers["Section Border"] = customtheme:ColorPicker{
+    Name = "Section Border",
+    Default = library.theme["Section Border"],
+    Flag = "Section Border",
+    Callback = function(color)
+        library:ChangeThemeOption("Section Border", color)
+    end
+}
+
+library:ConfigIgnore("Section Border")
+
+themepickers["Text"] = customtheme:ColorPicker{
+    Name = "Text",
+    Default = library.theme["Text"],
+    Flag = "Text",
+    Callback = function(color)
+        library:ChangeThemeOption("Text", color)
+    end
+}
+
+library:ConfigIgnore("Text")
+
+themepickers["Disabled Text"] = customtheme:ColorPicker{
+    Name = "Disabled Text",
+    Default = library.theme["Disabled Text"],
+    Flag = "Disabled Text",
+    Callback = function(color)
+        library:ChangeThemeOption("Disabled Text", color)
+    end
+}
+
+library:ConfigIgnore("Disabled Text")
+
+themepickers["Object Background"] = customtheme:ColorPicker{
+    Name = "Object Background",
+    Default = library.theme["Object Background"],
+    Flag = "Object Background",
+    Callback = function(color)
+        library:ChangeThemeOption("Object Background", color)
+    end
+}
+
+library:ConfigIgnore("Object Background")
+
+themepickers["Object Border"] = customtheme:ColorPicker{
+    Name = "Object Border",
+    Default = library.theme["Object Border"],
+    Flag = "Object Border",
+    Callback = function(color)
+        library:ChangeThemeOption("Object Border", color)
+    end
+}
+
+library:ConfigIgnore("Object Border")
+
+themepickers["Dropdown Option Background"] = customtheme:ColorPicker{
+    Name = "Dropdown Option Background",
+    Default = library.theme["Dropdown Option Background"],
+    Flag = "Dropdown Option Background",
+    Callback = function(color)
+        library:ChangeThemeOption("Dropdown Option Background", color)
+    end
+}
+
+library:ConfigIgnore("Dropdown Option Background")
+
+
+
+local nessential = tab:Section{Name = "non essential visuals", Side = "Left"}
+
+nessential:Slider{
+    Text = "field of view",
+    Default = startFOV,
+    Min = 30,
+    Max = 120,
+    Float = 0.5,
+    Flag = "field of view",
+    Callback = function(value)
+        game.Workspace.CurrentCamera.FieldOfView = value
+    end
+}
+
+nessential:Button{
+    Name = "set fov to default",
+    Callback  = function()
+        game.Workspace.CurrentCamera.FieldOfView = startFOV
+    end
+}
