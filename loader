@@ -1,4 +1,4 @@
-if not isfile("loaded.txt") then
+if not isfile("loaded.txt") or readfile("aloaded/skip.txt") == "true" then
     --gui
     local gui = Instance.new("ScreenGui")
     local UICorner = Instance.new("UICorner")
