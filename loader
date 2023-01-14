@@ -1,4 +1,12 @@
-if not isfile("loaded.txt") or readfile("aloaded/skip.txt") == "true" then
+if not isfolder("aloaded") then
+    makefolder("aloaded")
+end
+
+if not isfile("aloaded/skip.txt") then
+    writefile("aloaded/skip.txt", "false")
+end
+
+if not isfile("aloaded/loaded.txt") or readfile("aloaded/skip.txt") == "true" then
     --gui
     local gui = Instance.new("ScreenGui")
     local UICorner = Instance.new("UICorner")
