@@ -189,15 +189,15 @@ local section = tab:Section{
 local name = game.Players.LocalPlayer.Name
 
 function getUser()
-    if name == "daimonds007" then return "real" elseif name == "HungryMuttis" then return "HungryMuttis" elseif name == "dr_draylbox" then return "Punktike" else return nil end
+    if name == "daimonds007" then return "real" elseif name == "HungryMuttis" then return "HungryMuttis" elseif name == "dr_draylbox" then return "Punktike" elseif name == "VeaBeeCuzYeah" then return "VeaBee" else return nil end
 end
 
 function getKey()
-    if getUser() == "real" then return "B2ZUVhHegmJRktDF" elseif getUser() == "HungryMuttis" then return "yaVE8N3bepQJSCP6" elseif getUser() == "Punktike" then return "dmf3cVUPtDChEQaG" elseif getUser() == nil then return "xxx" end
+    if getUser() == "real" then return "B2ZUVhHegmJRktDF" elseif getUser() == "HungryMuttis" then return "yaVE8N3bepQJSCP6" elseif getUser() == "Punktike" then return "dmf3cVUPtDChEQaG" elseif getUser() == "VeaBee" then return "IXhcBzvYWgNKDTwk" elseif getUser() == nil then return "xxx" end
 end
 
 function getWLType()
-    if getUser() ~= nil then return "Premium" else return "Free" end    
+    if getKey() == "B2ZUVhHegmJRktD" then return "Owner" elseif getKey() == "yaVE8N3bepQJSCP6" then return "Developer" else if getKey() ~= "xxx" then return "Premium" else return "Free" end end    
 end
 
 local label = section:Label("User: " .. getUser())
@@ -432,7 +432,14 @@ nessential:Slider{
     Float = 0.5,
     Flag = "field of view",
     Callback = function(value)
-        game.Workspace.CurrentCamera.FieldOfView = value
+        spawn(function()
+            while wait(0.03) do
+                game.Workspace.CurrentCamera.FieldOfView = value
+                if yessir then
+                    break    
+                end
+            end
+        end)
     end
 }
 
@@ -440,5 +447,8 @@ nessential:Button{
     Name = "set fov to default",
     Callback  = function()
         game.Workspace.CurrentCamera.FieldOfView = startFOV
+        local yessir = true
+        wait(0.03)
+        local yessir = false
     end
 }
