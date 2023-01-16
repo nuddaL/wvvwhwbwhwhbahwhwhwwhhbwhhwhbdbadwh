@@ -1,3 +1,8 @@
+if not isfile("aloaded/logtype.txt") then
+    writefile("aloaded/logtype.txt", "rConsole")    
+end
+
+
 local startFOV = game.Workspace.CurrentCamera.FieldOfView
 
 
@@ -34,36 +39,12 @@ local main = library:Load{
     SizeY = 700,
     Theme = "Midnight",
     Extension = "json", -- config file extension
-    Folder = "aloaded configs" -- config folder name
+    Folder = "aloaded" -- config folder name
 }
 
-
+--[[
 local tab = main:Tab("visuals")
-
-getgenv().lineEnabled = false
-getgenv().boxEnabled = false
-
-local section = tab:Section{
-    Name = "boxes",
-    Side = "Left"
-}
-
-local toggle = section:Toggle{
-    Name = "Enabled",
-    Flag = "boxesesp",
-    Default = false,
-    Callback  = function(bool)
-        --[[
-        if (bool and "enabled" or "disabled") == "enabled" then
-            getgenv().boxEnabled = true
-        else
-            getgenv().boxEnabled = false
-        end
-        print(boxEnabled)
-        --]]
-        print("Disabled due to not working at all")
-    end
-}
+--]]
 
 
 
@@ -104,6 +85,125 @@ local toggle = section:Toggle{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function logtype()
+    if readfile("aloaded/logtype.txt") == "rConsole" then return "rConsole" else return "ingameConsole" end
+end
+
+if logtype() == "rConsole" then rconsoleprint("@@WHITE@@") end
 
 
 
@@ -115,13 +215,14 @@ local tab = main:Tab("settings")
 local keybindsection = tab:Section{Name = "keybinds", Side = "Left"}
 
 keybindsection:Keybind{
-    Name = "ui Ttoggle",
+    Name = "ui toggle",
     Flag = "UI Toggle",
     Default = Enum.KeyCode.RightShift,
     Blacklist = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2, Enum.UserInputType.MouseButton3},
     Callback = function(_, fromsetting)
         if not fromsetting then
             library:Close()
+            if logtype() == "rConsole" then rconsoleprint("toggled ui\n") else print("toggled ui") end
         end
     end
 }
@@ -129,12 +230,14 @@ keybindsection:Keybind{
 keybindsection:Keybind{
     Name = "panic keybind",
     Flag = "PanicKeybind",
-    Default = Enum.KeyCode.P,
+    Default = Enum.KeyCode.RightAlt,
     Blacklist = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2, Enum.UserInputType.MouseButton3},
     Callback = function(_, fromsetting)
         if not fromsetting then
             library:Unload()
             game.Workspace.CurrentCamera.FieldOfView = startFOV
+            if logtype() == "rConsole" then rconsoleprint("panic unloaded ui\n") else print("panic unloaded ui") end
+            delfile("aloaded/executed.txt", "no")
         end
     end
 }
@@ -153,6 +256,7 @@ local loadconfig = configsection:Button{
     Name = "Load Config",
     Callback = function()
         library:LoadConfig(library.flags["Config Dropdown"]) -- LoadConfig(library.flags["Config Dropdown"], true)  if you want universal configs
+        if logtype() == "rConsole" then rconsoleprint("loaded config\n") else print("loaded config") end
     end
 }
 
@@ -161,6 +265,7 @@ local delconfig = configsection:Button{
     Callback = function()
         library:DeleteConfig(library.flags["Config Dropdown"]) -- DeleteConfig(library.flags["Config Dropdown"], true)  if you want universal configs
         configlist:Refresh(library:GetConfigs())
+        if logtype() == "rConsole" then rconsoleprint("deleted config\n") else print("deleted config") end
     end
 }
 
@@ -178,6 +283,7 @@ local save = configsection:Button{
     Callback = function()
         library:SaveConfig(library.flags["Config Dropdown"] or library.flags["Config Name"]) -- SaveConfig(library.flags["Config Name"], true) if you want universal configs
         configlist:Refresh(library:GetConfigs())
+        if logtype() == "rConsole" then rconsoleprint("saved config\n") else print("saved config") end
     end
 }
 
@@ -189,11 +295,11 @@ local section = tab:Section{
 local name = game.Players.LocalPlayer.Name
 
 function getUser()
-    if name == "daimonds007" then return "real" elseif name == "HungryMuttis" then return "HungryMuttis" elseif name == "dr_draylbox" then return "Punktike" elseif name == "VeaBeeCuzYeah" then return "VeaBee" else return nil end
+    if name == "daimonds007" then return "real" elseif name == "HungryMuttis" then return "HungryMuttis" elseif name == "dr_draylbox" then return "Punktike" elseif name == "VeaBeeCuzYeah" then return "VeaBee" else return "unknown" end
 end
 
 function getKey()
-    if getUser() == "real" then return "B2ZUVhHegmJRktDF" elseif getUser() == "HungryMuttis" then return "yaVE8N3bepQJSCP6" elseif getUser() == "Punktike" then return "dmf3cVUPtDChEQaG" elseif getUser() == "VeaBee" then return "IXhcBzvYWgNKDTwk" elseif getUser() == nil then return "xxx" end
+    if getUser() == "real" then return "B2ZUVhHegmJRktDF" elseif getUser() == "HungryMuttis" then return "yaVE8N3bepQJSCP6" elseif getUser() == "Punktike" then return "dmf3cVUPtDChEQaG" elseif getUser() == "VeaBee" then return "IXhcBzvYWgNKDTwk" elseif getUser() == "unknown" then return "xxx" end
 end
 
 function getWLType()
@@ -406,6 +512,7 @@ local dropdown = nessential:Dropdown{
     Flag = "mainexecutor",
     Callback = function(option)
         writefile("aloaded/loaded.txt", tostring(option))
+        if logtype() == "rConsole" then rconsoleprint("changed main executor\n") else print("changed main executor") end
     end
 }
 
@@ -419,19 +526,25 @@ local toggle = nessential:Toggle{
         else
             writefile("aloaded/skip.txt", "false")
         end
+        if logtype() == "rConsole" then rconsoleprint("changed skip sign up\n") else print("changed skip signup") end
     end
 }
 
 local nessential = tab:Section{Name = "non essential visuals", Side = "Left"}
 
 nessential:Slider{
-    Text = "field of view",
+    Text = "[value]/120 fov",
     Default = startFOV,
     Min = 30,
     Max = 120,
     Float = 0.5,
     Flag = "field of view",
     Callback = function(value)
+        if value ~= oaaa then
+            yessir = true
+        elseif value == oaaa then
+            yessir = false
+        end
         spawn(function()
             while wait(0.03) do
                 game.Workspace.CurrentCamera.FieldOfView = value
@@ -440,6 +553,8 @@ nessential:Slider{
                 end
             end
         end)
+        local oaaa = value
+        if logtype() == "rConsole" then rconsoleprint("changed fov\n") else print("changed fov") end
     end
 }
 
@@ -450,5 +565,272 @@ nessential:Button{
         local yessir = true
         wait(0.03)
         local yessir = false
+        if logtype() == "rConsole" then rconsoleprint("set fov to the one when u executed\n") else print("changed fov to the one when u executed") end
     end
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--////////Chat commands\\\\\\\\\\--
+
+game:GetService("Players").LocalPlayer.Chatted:connect(function(msg)
+if (string.lower(msg) == "!unload") then
+        library:Unload()
+        game.Workspace.CurrentCamera.FieldOfView = startFOV
+        if logtype() == "rConsole" then rconsoleprint("unloaded ui with chat command\n") else print("unloaded ui with chat command") end
+        delfile("aloaded/executed.txt")
+    end
+end)
+
+game:GetService("Players").LocalPlayer.Chatted:connect(function(msg)
+if (string.lower(msg) == "!close") then
+        library:Close()
+        if logtype() == "rConsole" then rconsoleprint("closed ui with chat command\n") else print("closed ui with chat command") end
+    end
+end)
+
+game:GetService("Players").LocalPlayer.Chatted:connect(function(msg)
+if (string.lower(msg) == "!open") then
+        library:Close()
+        if logtype() == "rConsole" then rconsoleprint("opened ui with chat command\n") else print("opened ui with chat command") end
+    end
+end)
+
+game:GetService("Players").LocalPlayer.Chatted:connect(function(msg)
+if (string.lower(msg) == "!cmds") then
+        game.StarterGui:SetCore("ChatMakeSystemMessage", {
+        	Text = "Prefix: !\ncmds - shows all of the commands\nopen - opens the menu\nclose - closes the menu\nunload - unloads the menu\nwatermark - toggles watermark\nlogtype - changes the log type";
+        	Color = Color3.fromRGB(25,25,25); --Makes the message red, you can adjust this one
+        	Font = Enum.Font.Arial; --Font that you like (to use arial do Enum.Font.Arial, etc...)
+        	FontSize = Enum.FontSize.Size96; --I don't recommend changing this, but it's custom also :D
+        })
+        if logtype() == "rConsole" then rconsoleprint("opened commands with chat command\n") else print("opened commands with chat command") end
+    end
+end)
+
+game:GetService("Players").LocalPlayer.Chatted:connect(function(msg)
+if (string.lower(msg) == "!rejoin") then
+        loadstring(game:HttpGet("https://pastebin.com/raw/1gtVMUz3"))()
+        delfile("aloaded/executed.txt")
+    end
+end)
+
+game:GetService("Players").LocalPlayer.Chatted:connect(function(msg)
+if (string.lower(msg) == "!kickself") then
+        game.Players.LocalPlayer:Kick("You asked for it " .. game.Players.LocalPlayer.Name .. ".")
+        delfile("aloaded/executed.txt")
+    end
+end)
+
+game:GetService("Players").LocalPlayer.Chatted:connect(function(msg)
+if (string.lower(msg) == "!logtype") then
+        if logType == "rConsole" then
+            local logType = "ingameConsole"
+            print("Logs will be sent to the ingame console now. Please press F9 to view it.")
+            writefile("aloaded/logtype.txt", "ingameConsole")
+        elseif logType == "ingameConsole" then
+            local logType = "rConsole"
+            rconsoleprint("@@WHITE@@")
+            rconsoleprint("\nConsole will now be used for logging.\n\n")
+            writefile("aloaded/logtype.txt", "rConsole")
+        end
+        if logtype() == "rConsole" then rconsoleprint("toggled logtype with chat command\n") else print("toggled logtype with chat command") end
+    end
+end)
