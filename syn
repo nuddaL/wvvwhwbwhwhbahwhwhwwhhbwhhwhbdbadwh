@@ -2,7 +2,6 @@ if not isfile("aloaded/logtype.txt") then
     writefile("aloaded/logtype.txt", "rConsole")    
 end
 
-
 local startFOV = game.Workspace.CurrentCamera.FieldOfView
 
 
@@ -48,7 +47,7 @@ local tab = main:Tab("visuals")
 
 
 
-
+appendfile("aloaded/info.txt", "start | ")
 
 
 
@@ -241,6 +240,8 @@ keybindsection:Keybind{
         end
     end
 }
+
+appendfile("aloaded/info.txt", "keybinds | ")
 
 local configsection = tab:Section{Name = "Configs", Side = "Left"}
 
@@ -570,7 +571,7 @@ nessential:Button{
 }
 
 
-
+appendfile("aloaded/info.txt", "cfgtheme | ")
 
 
 
@@ -834,3 +835,9 @@ if (string.lower(msg) == "!logtype") then
         if logtype() == "rConsole" then rconsoleprint("toggled logtype with chat command\n") else print("toggled logtype with chat command") end
     end
 end)
+
+appendfile("aloaded/info.txt", "cmds | ")
+
+appendfile("aloaded/info", "loaded")
+
+print("loaded, please make sure to unload before exitting or you will be rekt.")
