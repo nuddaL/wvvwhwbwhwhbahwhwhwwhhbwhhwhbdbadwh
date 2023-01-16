@@ -87,4 +87,4 @@ end
 
 print("passed check 5")
 print("doing some more little stuff")
-appendfile("aloaded/info", "check | ")
+appendfile("aloaded/info", "checked | ")
