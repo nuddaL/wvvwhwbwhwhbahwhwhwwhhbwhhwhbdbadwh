@@ -1,8 +1,5 @@
     return {
-        "en",
         "EN",
-        "de",
         "DE",
-        "es",
         "ES"
     }
